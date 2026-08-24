@@ -27,6 +27,7 @@ class ApexColorSettingsPage : ColorSettingsPage {
         @IsTest
         public with sharing class AccountController {
             private static final Integer MAX_RECORDS = 50;
+            private Account_Custom__c customRecord;
 
             @AuraEnabled(cacheable=true)
             public static List<Account> getAccounts(String searchKey) {
@@ -34,7 +35,7 @@ class ApexColorSettingsPage : ColorSettingsPage {
                 if (String.isBlank(searchKey)) {
                     return new List<Account>();
                 }
-                return [SELECT Id, Name, Phone FROM Account WHERE Name LIKE :('%' + searchKey + '%') LIMIT :MAX_RECORDS];
+                return [SELECT Id, Name, Custom_Field__c FROM Account WHERE Name LIKE :('%' + searchKey + '%') LIMIT :MAX_RECORDS];
             }
         }
     """.trimIndent()
@@ -45,6 +46,12 @@ class ApexColorSettingsPage : ColorSettingsPage {
         private val DESCRIPTORS = arrayOf(
             AttributesDescriptor("Keyword", ApexSyntaxHighlighter.KEYWORD),
             AttributesDescriptor("Type Name", ApexSyntaxHighlighter.TYPE_NAME),
+            AttributesDescriptor("Class Declaration", ApexSyntaxHighlighter.CLASS_DECLARATION),
+            AttributesDescriptor("Method Declaration", ApexSyntaxHighlighter.METHOD_DECLARATION),
+            AttributesDescriptor("Method Call", ApexSyntaxHighlighter.METHOD_CALL),
+            AttributesDescriptor("Constant", ApexSyntaxHighlighter.CONSTANT),
+            AttributesDescriptor("Salesforce Custom Field / Object", ApexSyntaxHighlighter.CUSTOM_FIELD),
+            AttributesDescriptor("SOQL Query Keyword", ApexSyntaxHighlighter.SOQL_KEYWORD),
             AttributesDescriptor("Annotation", ApexSyntaxHighlighter.ANNOTATION),
             AttributesDescriptor("String", ApexSyntaxHighlighter.STRING),
             AttributesDescriptor("Number", ApexSyntaxHighlighter.NUMBER),

@@ -46,6 +46,13 @@ class ApexSyntaxHighlighter : SyntaxHighlighterBase() {
     companion object {
         val KEYWORD = createTextAttributesKey("APEX_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
         val TYPE_NAME = createTextAttributesKey("APEX_TYPE_NAME", DefaultLanguageHighlighterColors.CLASS_NAME)
+        val CLASS_DECLARATION = createTextAttributesKey("APEX_CLASS_DECLARATION", DefaultLanguageHighlighterColors.CLASS_NAME)
+        val METHOD_DECLARATION = createTextAttributesKey("APEX_METHOD_DECLARATION", DefaultLanguageHighlighterColors.FUNCTION_DECLARATION)
+        val METHOD_CALL = createTextAttributesKey("APEX_METHOD_CALL", DefaultLanguageHighlighterColors.FUNCTION_CALL)
+        val CONSTANT = createTextAttributesKey("APEX_CONSTANT", DefaultLanguageHighlighterColors.CONSTANT)
+        val CUSTOM_FIELD = createTextAttributesKey("APEX_CUSTOM_FIELD", DefaultLanguageHighlighterColors.INSTANCE_FIELD)
+        val SOQL_KEYWORD = createTextAttributesKey("APEX_SOQL_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
+
         val ANNOTATION = createTextAttributesKey("APEX_ANNOTATION", DefaultLanguageHighlighterColors.METADATA)
         val STRING = createTextAttributesKey("APEX_STRING", DefaultLanguageHighlighterColors.STRING)
         val NUMBER = createTextAttributesKey("APEX_NUMBER", DefaultLanguageHighlighterColors.NUMBER)

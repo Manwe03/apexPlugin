@@ -40,6 +40,12 @@
                                  id="com.manwe.apex.settings.ApexSettingsConfigurable"
                                  displayName="Apex Language Server"/>
 
+        <lang.parserDefinition language="Apex"
+                               implementationClass="com.manwe.apex.syntax.ApexParserDefinition"/>
+
+        <annotator language="Apex"
+                   implementationClass="com.manwe.apex.syntax.ApexAnnotator"/>
+
         <lang.syntaxHighlighterFactory language="Apex"
                                       implementationClass="com.manwe.apex.syntax.ApexSyntaxHighlighterFactory"/>
 
