@@ -1,0 +1,47 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.manwe.apexPlugin</id>
+
+    <!-- Public plugin name should be written in Title Case.
+     Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-name -->
+    <name>ApexPlugin</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor url="https://www.yourcompany.com">YourCompany</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
+    <description><![CDATA[
+        Salesforce Apex language support for IntelliJ Platform, powered by Apex Language Server (LSP).
+        Provides code completion, real-time diagnostics, navigation, and refactoring for .cls, .trigger, and .apex files.
+        ]]></description>
+
+    <!-- Product and plugin compatibility requirements. -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lsp</depends>
+
+    <resource-bundle>messages.MyMessageBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="Apex Plugin Notifications"
+                           displayType="BALLOON"/>
+
+        <fileType name="Apex"
+                  implementationClass="com.manwe.apex.ApexFileType"
+                  fieldName="INSTANCE"
+                  language="Apex"
+                  extensions="cls;trigger;apex"/>
+
+        <platform.lsp.serverSupportProvider
+                  implementation="com.manwe.apex.lsp.ApexLspServerSupportProvider"/>
+
+        <applicationConfigurable instance="com.manwe.apex.settings.ApexSettingsConfigurable"
+                                 id="com.manwe.apex.settings.ApexSettingsConfigurable"
+                                 displayName="Apex Language Server"/>
+
+        <toolWindow id="MyToolWindow" factoryClass="com.manwe.MyToolWindowFactory"
+                    icon="AllIcons.Toolwindows.ToolWindowPalette"/>
+    </extensions>
+
+</idea-plugin>
