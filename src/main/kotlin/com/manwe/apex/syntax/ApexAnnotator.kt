@@ -14,6 +14,7 @@ class ApexAnnotator : Annotator {
 
         val text = element.text
         if (text.isBlank()) return
+        val lowerText = text.lowercase()
 
         // 1. Salesforce Custom Fields & Custom Objects (__c, __r, __e, __mdt, __share)
         if (text.contains("__c") || text.contains("__r") || text.contains("__e") || text.contains("__mdt") || text.contains("__share")) {
@@ -29,7 +30,7 @@ class ApexAnnotator : Annotator {
             return
         }
 
-        // 3. Method declarations (e.g. void getAccounts(...) or Account createRecord(...))
+        // 3. Method declarations (e.g. void getAccounts(...), List<Account> create(), Map<String, Contact> fetch())
         val nextSibling = getNextNonWhitespaceSibling(element)
         val nextText = nextSibling?.text
         if (nextText == "(" && isMethodDeclarationContext(element)) {
@@ -49,9 +50,20 @@ class ApexAnnotator : Annotator {
             return
         }
 
-        // 6. SOQL Keywords inside [SELECT ...] queries
+        // 6. Primitive Types (Integer, String, Boolean, Date, Datetime, Decimal, Double, Id, Long, Object, Void)
+        if (ApexTokenTypes.PRIMITIVE_TYPES.contains(lowerText)) {
+            highlight(element, holder, ApexSyntaxHighlighter.PRIMITIVE_TYPE)
+            return
+        }
+
+        // 7. Salesforce SObject & Complex Types (Account, Contact, Opportunity, Lead, List, Set, Map, etc.)
+        if (ApexTokenTypes.SALESFORCE_SOBJECT_TYPES.contains(lowerText) || (text.firstOrNull()?.isUpperCase() == true && text.all { it.isLetterOrDigit() || it == '_' })) {
+            highlight(element, holder, ApexSyntaxHighlighter.SOBJECT_TYPE)
+            return
+        }
+
+        // 8. SOQL Keywords inside [SELECT ...] queries
         if (isInSoqlQuery(element)) {
-            val lowerText = text.lowercase()
             if (SOQL_KEYWORDS.contains(lowerText)) {
                 highlight(element, holder, ApexSyntaxHighlighter.SOQL_KEYWORD)
                 return
@@ -85,9 +97,29 @@ class ApexAnnotator : Annotator {
     private fun isMethodDeclarationContext(element: PsiElement): Boolean {
         val prev = getPrevNonWhitespaceSibling(element) ?: return false
         val pText = prev.text.lowercase()
-        return pText in listOf("void", "public", "private", "protected", "global", "static", "override", "virtual") ||
-               prev.text.firstOrNull()?.isUpperCase() == true ||
-               ApexTokenTypes.BUILTIN_TYPES.contains(pText)
+
+        // Preceded by closing bracket of generic type e.g. List<Account> create() or Map<K,V> process() or Account[] create()
+        if (prev.text == ">" || prev.text == "]") {
+            return true
+        }
+
+        // Preceded by void or return type name e.g. void create(), String getName(), Account getAccount()
+        if (pText == "void" || ApexTokenTypes.PRIMITIVE_TYPES.contains(pText) || ApexTokenTypes.SALESFORCE_SOBJECT_TYPES.contains(pText) || prev.text.firstOrNull()?.isUpperCase() == true) {
+            return true
+        }
+
+        // Check preceding modifier chain (public/private/static/override/etc.)
+        var curr: PsiElement? = prev
+        while (curr != null) {
+            val t = curr.text.lowercase()
+            if (t in listOf("public", "private", "protected", "global", "static", "override", "virtual", "abstract")) {
+                return true
+            }
+            if (t == ";" || t == "{" || t == "}") break
+            curr = getPrevNonWhitespaceSibling(curr)
+        }
+
+        return false
     }
 
     private fun isDeclaredConstant(element: PsiElement): Boolean {

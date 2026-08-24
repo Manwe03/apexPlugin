@@ -45,12 +45,13 @@ class ApexColorSettingsPage : ColorSettingsPage {
     companion object {
         private val DESCRIPTORS = arrayOf(
             AttributesDescriptor("Keyword", ApexSyntaxHighlighter.KEYWORD),
-            AttributesDescriptor("Type Name", ApexSyntaxHighlighter.TYPE_NAME),
+            AttributesDescriptor("Primitive Type (Integer, String...)", ApexSyntaxHighlighter.PRIMITIVE_TYPE),
+            AttributesDescriptor("Salesforce SObject Type (Account, Contact...)", ApexSyntaxHighlighter.SOBJECT_TYPE),
             AttributesDescriptor("Class Declaration", ApexSyntaxHighlighter.CLASS_DECLARATION),
-            AttributesDescriptor("Method Declaration", ApexSyntaxHighlighter.METHOD_DECLARATION),
-            AttributesDescriptor("Method Call", ApexSyntaxHighlighter.METHOD_CALL),
+            AttributesDescriptor("Method Declaration (Blue)", ApexSyntaxHighlighter.METHOD_DECLARATION),
+            AttributesDescriptor("Method Call (Blue)", ApexSyntaxHighlighter.METHOD_CALL),
             AttributesDescriptor("Constant", ApexSyntaxHighlighter.CONSTANT),
-            AttributesDescriptor("Salesforce Custom Field / Object", ApexSyntaxHighlighter.CUSTOM_FIELD),
+            AttributesDescriptor("Salesforce Custom Field / Object (__c, __r)", ApexSyntaxHighlighter.CUSTOM_FIELD),
             AttributesDescriptor("SOQL Query Keyword", ApexSyntaxHighlighter.SOQL_KEYWORD),
             AttributesDescriptor("Annotation", ApexSyntaxHighlighter.ANNOTATION),
             AttributesDescriptor("String", ApexSyntaxHighlighter.STRING),

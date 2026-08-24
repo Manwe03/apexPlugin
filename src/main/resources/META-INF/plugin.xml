@@ -51,6 +51,9 @@
 
         <colorSettingsPage implementation="com.manwe.apex.syntax.ApexColorSettingsPage"/>
 
+        <additionalTextAttributes scheme="Default" file="colorSchemes/ApexDefault.xml"/>
+        <additionalTextAttributes scheme="Darcula" file="colorSchemes/ApexDarcula.xml"/>
+
         <toolWindow id="MyToolWindow" factoryClass="com.manwe.MyToolWindowFactory"
                     icon="AllIcons.Toolwindows.ToolWindowPalette"/>
     </extensions>

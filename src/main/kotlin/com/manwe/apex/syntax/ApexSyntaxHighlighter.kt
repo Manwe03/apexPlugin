@@ -18,6 +18,8 @@ class ApexSyntaxHighlighter : SyntaxHighlighterBase() {
             ApexTokenTypes.BOOLEAN_LITERAL,
             ApexTokenTypes.NULL_LITERAL -> KEYWORD_KEYS
 
+            ApexTokenTypes.PRIMITIVE_TYPE -> PRIMITIVE_TYPE_KEYS
+            ApexTokenTypes.SOBJECT_TYPE -> SOBJECT_TYPE_KEYS
             ApexTokenTypes.TYPE_NAME -> TYPE_NAME_KEYS
             ApexTokenTypes.ANNOTATION -> ANNOTATION_KEYS
 
@@ -45,14 +47,15 @@ class ApexSyntaxHighlighter : SyntaxHighlighterBase() {
 
     companion object {
         val KEYWORD = createTextAttributesKey("APEX_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
-        val TYPE_NAME = createTextAttributesKey("APEX_TYPE_NAME", DefaultLanguageHighlighterColors.CLASS_NAME)
         val CLASS_DECLARATION = createTextAttributesKey("APEX_CLASS_DECLARATION", DefaultLanguageHighlighterColors.CLASS_NAME)
+        val TYPE_NAME = createTextAttributesKey("APEX_TYPE_NAME", DefaultLanguageHighlighterColors.CLASS_NAME)
+        val PRIMITIVE_TYPE = createTextAttributesKey("APEX_PRIMITIVE_TYPE", DefaultLanguageHighlighterColors.KEYWORD)
+        val SOBJECT_TYPE = createTextAttributesKey("APEX_SOBJECT_TYPE", DefaultLanguageHighlighterColors.CLASS_NAME)
         val METHOD_DECLARATION = createTextAttributesKey("APEX_METHOD_DECLARATION", DefaultLanguageHighlighterColors.FUNCTION_DECLARATION)
         val METHOD_CALL = createTextAttributesKey("APEX_METHOD_CALL", DefaultLanguageHighlighterColors.FUNCTION_CALL)
-        val CONSTANT = createTextAttributesKey("APEX_CONSTANT", DefaultLanguageHighlighterColors.CONSTANT)
         val CUSTOM_FIELD = createTextAttributesKey("APEX_CUSTOM_FIELD", DefaultLanguageHighlighterColors.INSTANCE_FIELD)
+        val CONSTANT = createTextAttributesKey("APEX_CONSTANT", DefaultLanguageHighlighterColors.CONSTANT)
         val SOQL_KEYWORD = createTextAttributesKey("APEX_SOQL_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
-
         val ANNOTATION = createTextAttributesKey("APEX_ANNOTATION", DefaultLanguageHighlighterColors.METADATA)
         val STRING = createTextAttributesKey("APEX_STRING", DefaultLanguageHighlighterColors.STRING)
         val NUMBER = createTextAttributesKey("APEX_NUMBER", DefaultLanguageHighlighterColors.NUMBER)
@@ -69,6 +72,8 @@ class ApexSyntaxHighlighter : SyntaxHighlighterBase() {
         val BAD_CHARACTER = createTextAttributesKey("APEX_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
 
         private val KEYWORD_KEYS = arrayOf(KEYWORD)
+        private val PRIMITIVE_TYPE_KEYS = arrayOf(PRIMITIVE_TYPE)
+        private val SOBJECT_TYPE_KEYS = arrayOf(SOBJECT_TYPE)
         private val TYPE_NAME_KEYS = arrayOf(TYPE_NAME)
         private val ANNOTATION_KEYS = arrayOf(ANNOTATION)
         private val STRING_KEYS = arrayOf(STRING)

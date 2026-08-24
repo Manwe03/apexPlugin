@@ -1,0 +1,62 @@
+<scheme name="Default" version="142" parent_scheme="Default">
+  <attributes>
+    <option name="APEX_KEYWORD">
+      <value>
+        <option name="FOREGROUND" value="0033b0" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="APEX_PRIMITIVE_TYPE">
+      <value>
+        <option name="FOREGROUND" value="007799" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="APEX_SOBJECT_TYPE">
+      <value>
+        <option name="FOREGROUND" value="b58900" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="APEX_TYPE_NAME">
+      <value>
+        <option name="FOREGROUND" value="007799" />
+      </value>
+    </option>
+    <option name="APEX_CLASS_DECLARATION">
+      <value>
+        <option name="FOREGROUND" value="0052cc" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="APEX_METHOD_DECLARATION">
+      <value>
+        <option name="FOREGROUND" value="0066cc" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="APEX_METHOD_CALL">
+      <value>
+        <option name="FOREGROUND" value="0066cc" />
+      </value>
+    </option>
+    <option name="APEX_CUSTOM_FIELD">
+      <value>
+        <option name="FOREGROUND" value="d73a49" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="APEX_CONSTANT">
+      <value>
+        <option name="FOREGROUND" value="871094" />
+        <option name="FONT_TYPE" value="3" />
+      </value>
+    </option>
+    <option name="APEX_SOQL_KEYWORD">
+      <value>
+        <option name="FOREGROUND" value="005a9e" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+  </attributes>
+</scheme>

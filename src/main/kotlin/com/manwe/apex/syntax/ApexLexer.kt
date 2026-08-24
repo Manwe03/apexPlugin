@@ -148,7 +148,7 @@ class ApexLexer : LexerBase() {
             return
         }
 
-        // 6. Identifiers, Keywords, Builtin Types
+        // 6. Identifiers, Keywords, Builtin Types, Primitives, SObjects
         if (ch.isLetter() || ch == '_') {
             while (currentOffset < endOffset && (buffer[currentOffset].isLetterOrDigit() || buffer[currentOffset] == '_')) {
                 currentOffset++
@@ -159,7 +159,8 @@ class ApexLexer : LexerBase() {
                 text == "true" || text == "false" -> ApexTokenTypes.BOOLEAN_LITERAL
                 text == "null" -> ApexTokenTypes.NULL_LITERAL
                 ApexTokenTypes.KEYWORDS.contains(text) -> ApexTokenTypes.KEYWORD
-                ApexTokenTypes.BUILTIN_TYPES.contains(text) -> ApexTokenTypes.TYPE_NAME
+                ApexTokenTypes.PRIMITIVE_TYPES.contains(text) -> ApexTokenTypes.PRIMITIVE_TYPE
+                ApexTokenTypes.SALESFORCE_SOBJECT_TYPES.contains(text) -> ApexTokenTypes.SOBJECT_TYPE
                 else -> ApexTokenTypes.IDENTIFIER
             }
             return

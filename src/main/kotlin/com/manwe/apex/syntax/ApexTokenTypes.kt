@@ -9,6 +9,8 @@ object ApexTokenTypes {
 
     @JvmField val KEYWORD = ApexTokenType("KEYWORD")
     @JvmField val TYPE_NAME = ApexTokenType("TYPE_NAME")
+    @JvmField val PRIMITIVE_TYPE = ApexTokenType("PRIMITIVE_TYPE")
+    @JvmField val SOBJECT_TYPE = ApexTokenType("SOBJECT_TYPE")
     @JvmField val ANNOTATION = ApexTokenType("ANNOTATION")
     
     @JvmField val STRING = ApexTokenType("STRING")
@@ -50,9 +52,16 @@ object ApexTokenTypes {
         "virtual", "void", "when", "where", "while", "with", "without"
     )
 
-    val BUILTIN_TYPES = setOf(
+    val PRIMITIVE_TYPES = setOf(
         "blob", "boolean", "date", "datetime", "decimal", "double", "id", "integer",
-        "long", "object", "string", "time", "list", "set", "map", "pageReference",
-        "sobject", "database", "system", "test", "schema"
+        "long", "object", "string", "time", "void"
+    )
+
+    val SALESFORCE_SOBJECT_TYPES = setOf(
+        "account", "contact", "opportunity", "lead", "case", "asset", "user",
+        "userrole", "profile", "group", "task", "event", "attachment", "contentversion",
+        "apexclass", "apexpage", "apexcomponent", "apextrigger", "organization", "site",
+        "sessionheader", "sobject", "schema", "pagereference", "database", "system", "test",
+        "list", "set", "map"
     )
 }
