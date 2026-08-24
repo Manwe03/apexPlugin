@@ -40,6 +40,11 @@
                                  id="com.manwe.apex.settings.ApexSettingsConfigurable"
                                  displayName="Apex Language Server"/>
 
+        <lang.syntaxHighlighterFactory language="Apex"
+                                      implementationClass="com.manwe.apex.syntax.ApexSyntaxHighlighterFactory"/>
+
+        <colorSettingsPage implementation="com.manwe.apex.syntax.ApexColorSettingsPage"/>
+
         <toolWindow id="MyToolWindow" factoryClass="com.manwe.MyToolWindowFactory"
                     icon="AllIcons.Toolwindows.ToolWindowPalette"/>
     </extensions>
