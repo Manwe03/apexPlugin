@@ -43,19 +43,7 @@ class ApexLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
             if (file.exists()) return file.absolutePath
         }
 
-        // 2. Local dev project path (lib/apex-jorje-lsp.jar in current project or user home)
-        val userHome = System.getProperty("user.home")
-        if (userHome != null) {
-            val devLib = File(userHome, "IdeaProjects/apexPlugin/lib/apex-jorje-lsp.jar")
-            if (devLib.exists()) return devLib.absolutePath
-        }
-
-        project.basePath?.let { basePath ->
-            val localLib = File(basePath, "lib/apex-jorje-lsp.jar")
-            if (localLib.exists()) return localLib.absolutePath
-        }
-
-        // 3. Installed plugin directory
+         // 2. Installed plugin directory
         try {
             val classLoader = ApexLspServerDescriptor::class.java.classLoader
             val pluginDescriptor = (classLoader as? PluginAwareClassLoader)?.pluginDescriptor
@@ -71,9 +59,21 @@ class ApexLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
             }
         } catch (_: Exception) {}
 
-        // 4. Bundled resource extraction
+        // 3. Bundled resource extraction (extracts from inside plugin jar if needed)
         val extractedPath = extractBundledJar()
         if (extractedPath != null) return extractedPath
+
+        // 4. Local dev project path (lib/apex-jorje-lsp.jar in current project or user home)
+        val userHome = System.getProperty("user.home")
+        if (userHome != null) {
+            val devLib = File(userHome, "IdeaProjects/apexPlugin/lib/apex-jorje-lsp.jar")
+            if (devLib.exists()) return devLib.absolutePath
+        }
+
+        project.basePath?.let { basePath ->
+            val localLib = File(basePath, "lib/apex-jorje-lsp.jar")
+            if (localLib.exists()) return localLib.absolutePath
+        }
 
         // 5. Check environment variables
         val envPath = System.getenv("APEX_LSP_JAR") ?: System.getenv("SALESFORCE_APEX_LSP_JAR")
@@ -122,15 +122,19 @@ class ApexLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
 
     private fun extractBundledJar(): String? {
         try {
+            val classLoader = ApexLspServerDescriptor::class.java.classLoader
             val stream = ApexLspServerDescriptor::class.java.getResourceAsStream("/lib/apex-jorje-lsp.jar")
                 ?: ApexLspServerDescriptor::class.java.getResourceAsStream("/apex-jorje-lsp.jar")
+                ?: classLoader.getResourceAsStream("lib/apex-jorje-lsp.jar")
+                ?: classLoader.getResourceAsStream("apex-jorje-lsp.jar")
                 ?: return null
 
             val targetDir = File(PathManager.getTempPath(), "apex-lsp")
             if (!targetDir.exists()) targetDir.mkdirs()
             val targetFile = File(targetDir, "apex-jorje-lsp.jar")
 
-            if (!targetFile.exists() || targetFile.length() == 0L) {
+            // Re-extract if target file does not exist or is smaller than 10MB (full jar is ~18MB)
+            if (!targetFile.exists() || targetFile.length() < 10 * 1024 * 1024) {
                 stream.use { input ->
                     targetFile.outputStream().use { output ->
                         input.copyTo(output)

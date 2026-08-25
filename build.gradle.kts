@@ -28,6 +28,13 @@ sourceSets {
     }
 }
 
+tasks.prepareSandbox {
+    from("lib") {
+        into("lib")
+        include("apex-jorje-lsp.jar")
+    }
+}
+
 tasks.instrumentCode {
     enabled = false
 }
