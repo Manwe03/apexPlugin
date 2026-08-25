@@ -1,12 +1,11 @@
 package com.manwe.apex.lsp
 
 import com.intellij.execution.configurations.GeneralCommandLine
-import com.intellij.ide.plugins.PluginManagerCore
+import com.intellij.ide.plugins.cl.PluginAwareClassLoader
 import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.application.PathManager
-import com.intellij.openapi.extensions.PluginId
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
@@ -58,13 +57,16 @@ class ApexLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
 
         // 3. Installed plugin directory
         try {
-            val pluginId = PluginId.getId("com.manwe.apexPlugin")
-            val plugin = PluginManagerCore.getPlugin(pluginId)
-            val pluginDir = plugin?.pluginPath?.toFile()
+            val classLoader = ApexLspServerDescriptor::class.java.classLoader
+            val pluginDescriptor = (classLoader as? PluginAwareClassLoader)?.pluginDescriptor
+            val pluginDir = pluginDescriptor?.pluginPath?.toFile() ?: PathManager.getJarForClass(ApexLspServerDescriptor::class.java)?.toFile()
             if (pluginDir != null && pluginDir.exists()) {
-                val foundInPlugin = pluginDir.walkTopDown().maxDepth(5).firstOrNull { it.name == "apex-jorje-lsp.jar" }
-                if (foundInPlugin != null && foundInPlugin.exists()) {
-                    return foundInPlugin.absolutePath
+                val searchDir = if (pluginDir.isFile) pluginDir.parentFile?.parentFile else pluginDir
+                if (searchDir != null && searchDir.exists()) {
+                    val foundInPlugin = searchDir.walkTopDown().maxDepth(5).firstOrNull { it.name == "apex-jorje-lsp.jar" }
+                    if (foundInPlugin != null && foundInPlugin.exists()) {
+                        return foundInPlugin.absolutePath
+                    }
                 }
             }
         } catch (_: Exception) {}
