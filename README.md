@@ -1,3 +1,5 @@
+https://plugins.jetbrains.com/plugin/33781-apex-language-support/edit
+
 # ApexPlugin
 
 [![Twitter Follow](https://img.shields.io/badge/follow-%40JBPlatform-1DA1F2?logo=twitter)](https://twitter.com/JBPlatform)
